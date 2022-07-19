@@ -9,18 +9,19 @@ namespace TestProject2
     {
         private NssmProcess _nssmProcess;
 
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void problem_1()
         {
-            // _nssmProcess = new NssmProcess("ipconfig.exe");
+            // _nssmProcess.Exec("").Should().Contain("NSSM: The non-sucking service manager");
             _nssmProcess = new NssmProcess(@"C:\Users\User\RiderProjects\TestProject2\nssm.exe");
+            _nssmProcess.Exec("remove not-exist-service confirm").Should().Contain("Can't open service!");
         }
 
         [Test]
-        public void exec_command_at_nssm()
+        public void test_case()
         {
-            // _nssmProcess.Exec("").Should().Contain("NSSM: The non-sucking service manager");
-            _nssmProcess.Exec("remove not-exist-service confirm").Should().Contain("Can't open service!");
+            _nssmProcess = new NssmProcess("ipconfig.exe");
+            _nssmProcess.Exec("").Should().Contain("Windows IP");
         }
     }
 }
