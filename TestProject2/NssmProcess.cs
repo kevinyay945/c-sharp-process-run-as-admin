@@ -10,7 +10,7 @@ namespace TestProject2
 
         public NssmProcess(string nssmPath)
         {
-            if (nssmPath==null || nssmPath=="")
+            if (nssmPath == null || nssmPath == "")
             {
                 throw new Exception("can't get nssm.exe when initial");
             }
@@ -28,8 +28,7 @@ namespace TestProject2
             processStartInfo.RedirectStandardInput = true;
             processStartInfo.UseShellExecute = false;
             processStartInfo.Verb = "runas";
-            processStartInfo.Arguments = cmd;
-            processStartInfo.FileName = this._nssmPath;
+            processStartInfo.FileName = "cmd.exe";
             process.StartInfo = processStartInfo;
             process.EnableRaisingEvents = true;
             process.OutputDataReceived += new DataReceivedEventHandler
@@ -42,6 +41,8 @@ namespace TestProject2
             );
             process.Start();
             process.BeginOutputReadLine();
+            process.StandardInput.WriteLine(this._nssmPath + " " + cmd);
+            process.StandardInput.WriteLine("exit");
             process.WaitForExit();
             process.CancelOutputRead();
             return stringBuilder.ToString();

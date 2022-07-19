@@ -1,5 +1,4 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace TestProject2
@@ -12,10 +11,17 @@ namespace TestProject2
         [Test]
         public void problem_1()
         {
-            // _nssmProcess.Exec("").Should().Contain("NSSM: The non-sucking service manager");
             _nssmProcess = new NssmProcess(@"C:\Users\User\RiderProjects\TestProject2\nssm.exe");
             _nssmProcess.Exec("remove not-exist-service confirm").Should().Contain("Can't open service!");
         }
+
+        [Test]
+        public void problem_2()
+        {
+            _nssmProcess = new NssmProcess(@"C:\Users\User\RiderProjects\TestProject2\nssm.exe");
+            _nssmProcess.Exec("remove not-exist-service").Should().Contain("Can't open service!");
+        }
+
 
         [Test]
         public void test_case()
